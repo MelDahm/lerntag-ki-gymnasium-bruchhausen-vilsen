@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modellierung – Prompt | Lernen mit KI</title>
+  <meta name="description" content="Euer Prompt, um eure These zur KI-Nutzung im schulischen Kontext mit KI weiterzuentwickeln.">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129504;</text></svg>">
+  <script src="common.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="page-header">
+    <div class="wrap">
+      <p class="kicker">Lerntag KI <span class="sep">|</span> Gymnasium Bruchhausen-Vilsen</p>
+      <h1 class="brand">Lernen mit KI</h1>
+      <p class="brand-sub">Erkundungen zum Ausprobieren</p>
+      <nav class="site-nav" aria-label="Erkundungen">
+        <ul>
+          <li><a href="index.html">👋 Start</a></li>
+          <li><a href="1.html">⁉️ Sokratischer Dialog</a></li>
+          <li><a href="2.html">💡 Prompting als Spiel</a></li>
+          <li><a href="3.html" aria-current="page">🧠 Modellierung</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main" id="inhalt">
+    <div class="wrap">
+      <h2>🧠 Euer Prompt zur Weiterentwicklung eurer These</h2>
+
+      <p>Hier ist ein Prompt, den ihr euch kopieren und in ein KI-Sprachmodell eingeben könnt, um eure These weiter zu entwickeln.</p>
+
+      <div class="prompt-box" id="resultText" data-template="thesis" data-key="challenge-thesis">Prompt wird geladen&hellip;</div>
+
+      <div class="result-actions">
+        <button type="button" id="copyButton" class="btn">Text kopieren</button>
+        <a class="btn-secondary" href="3.html">✏️ These anpassen</a>
+        <a class="btn-secondary" href="index.html">⬅️ Zurück zur Übersicht</a>
+      </div>
+
+      <div class="callout">
+        <p><strong>Tipp:</strong> Antwortet nach jedem Schritt kurz und begründet. Am Ende ist eure These präziser &ndash; und ihr wisst zugleich, worauf ihr euch in der Kleingruppe einigen könnt.</p>
+      </div>
+
+      <p class="source-note">Die Materialien dieser Erkundung stammen aus dem openly educational Projekt <a href="https://ebildungslabor.github.io/lernen-mit-ki/">Lernen mit KI</a> des eBildungslabors und wurden für den Lerntag KI am Gymnasium Bruchhausen-Vilsen angepasst.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="footer-line">Erstellt von Melanie Dahm (<a href="https://innovativlernen.de/">www.innovativLernen.de</a>) mit Unterstützung der Materialien von Nele Hirsch (<a href="https://ebildungslabor.de">eBildungslabor</a>).</p>
+      <p class="footer-line">Lizenz: <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.de">CC0 1.0</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      function getVal(){
+        try{
+          var p = new URLSearchParams(location.search);
+          var q = p.get('these')||p.get('challenge');
+          if(q && q.trim()!=='') return decodeURIComponent(q.replace(/\+/g,' '));
+          var keys=['challenge-thesis','these','challenge'];
+          for(var i=0;i<keys.length;i++){ var v=localStorage.getItem(keys[i]); if(v && String(v).trim()!=='') return v; }
+        }catch(e){}
+        return null;
+      }
+      document.addEventListener('DOMContentLoaded',function(){
+        var el=document.getElementById('resultText');
+        if(!el)return;
+        var val=getVal();
+        if(!val)return;
+        var txt='Wir haben als Kleingruppe diese These zur Nutzung von KI im schulischen Kontext entwickelt: '+val+'. Wir möchten dich nun bitten, uns bei der Weiterentwicklung dieser These zu unterstützen: Bitte gehe dazu schrittweise vor:\n\n1. Nenne drei Argumente, die die These stützen könnten. Dann frage uns, ob wir weitere Argumente wollen oder du weitermachen kannst.\n2. Nenne drei Gegenargumente oder Einschränkungen. Dann frage uns, ob wir weitere Gegenargumente wollen oder ob du weitermachen kannst.\n3. Gib je ein Fallbeispiel: eines, das die These bestätigt, und eines, das sie widerlegt. Dann frage uns, ob wir noch andere Fallbeispiele wünschen oder ob du zum Abschluss kommen kannst.\n\nAm Ende frage uns, wie wir auf Basis der Darstellung von dir die These modifizieren würden. Wenn wir dazu etwas geschrieben haben, machst du einen Vorschlag, wie du die These modifizieren würdest.\n\nNutze eine klare, prägnante und strukturierte Sprache.';
+        el.textContent=txt;
+      });
+      var c=document.getElementById('copyButton');
+      if(c){ c.addEventListener('click',function(){
+        var t=document.getElementById('resultText');
+        var txt=t?(t.innerText||t.textContent):'';
+        if(!txt)return;
+        try{ navigator.clipboard.writeText(txt).then(function(){ c.textContent='Prompt wurde kopiert!'; setTimeout(function(){c.textContent='Text kopieren';},2000);}); }catch(e){}
+      });}
+    })();
+  </script>
+</body>
+</html>
